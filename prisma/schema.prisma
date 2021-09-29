@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Filme {
+  id     Int     @id @default(autoincrement())
+  nome   String
+  imagem String?
+  data_lancamento String
+  tempo_duracao String
+  participantes Participante[]
+}
+
+model Participante {
+  id        Int      @default(autoincrement()) @id
+  nome     String
+  imagem String?
+  data_nascimento String
+  filme    Filme?    @relation(fields: [filmeId], references: [id])
+  filmeId  Int?
+}
+
+model Genero {
+  id Int @default(autoincrement()) @id
+  nome String
+}
