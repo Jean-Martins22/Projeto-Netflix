@@ -7,25 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Filme {
-  id     Int     @id @default(autoincrement())
-  nome   String
-  imagem String?
-  data_lancamento String
-  tempo_duracao String
-  participantes Participante[]
+model Movie {
+  id             Int           @id @default(autoincrement())
+  name           String
+  image          String?
+  date_published String
+  duration       String
+  genre          Genre[]
+  participants   Participant[]
 }
 
-model Participante {
-  id        Int      @default(autoincrement()) @id
-  nome     String
-  imagem String?
-  data_nascimento String
-  filme    Filme?    @relation(fields: [filmeId], references: [id])
-  filmeId  Int?
+model Genre {
+  id      Int    @id @default(autoincrement())
+  name    String
+  movieId Int?
+  movie   Movie? @relation(fields: [movieId], references: [id])
+
+  @@index([movieId], map: "Genre_movieId_fkey")
 }
 
-model Genero {
-  id Int @default(autoincrement()) @id
-  nome String
+model Participant {
+  id      Int    @id @default(autoincrement())
+  name    String
+  image   String
+  birth   String
+  staff   String
+  movieId Int?
+  movie   Movie? @relation(fields: [movieId], references: [id])
+
+  @@index([movieId], map: "Participant_movieId_fkey")
 }

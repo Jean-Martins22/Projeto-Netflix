@@ -1,14 +1,32 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { FilmesModule } from './filmes/filmes.module';
+import { MoviesController } from './movies/movies.controller';
+import { MoviesService } from './movies/movies.service';
+import { MoviesModule } from './movies/movies.module';
+import { GenresController } from './genres/genres.controller';
+import { GenresService } from './genres/genres.service';
+import { GenresModule } from './genres/genres.module';
+import { ParticipantsController } from './participants/participants.controller';
+import { ParticipantsModule } from './participants/participants.module';
+import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
-import { ParticipantesModule } from './participantes/participantes.module';
-import { GeneroModule } from './genero/genero.module';
+import { ParticipantsService } from './participants/participants.service';
 
 @Module({
-  imports: [FilmesModule, PrismaModule, ParticipantesModule, GeneroModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [MoviesModule, GenresModule, ParticipantsModule, PrismaModule],
+  controllers: [
+    AppController,
+    MoviesController,
+    GenresController,
+    ParticipantsController,
+  ],
+  providers: [
+    AppService,
+    MoviesService,
+    GenresService,
+    ParticipantsService,
+    PrismaService,
+  ],
 })
 export class AppModule {}
